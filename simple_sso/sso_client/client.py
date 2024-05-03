@@ -10,6 +10,7 @@ from django.urls import NoReverseMatch, reverse
 from django.views.generic import View
 from itsdangerous import URLSafeTimedSerializer
 from webservices.sync import SyncConsumer
+from django.contrib.auth import get_user_model
 
 
 class LoginView(View):
@@ -107,6 +108,7 @@ class Client:
         return user
 
     def build_user(self, user_data):
+        User = get_user_model()
         try:
             user = User.objects.get(username=user_data['username'])
             # Update user data, excluding username changes
